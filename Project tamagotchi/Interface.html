@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tamagotchi</title>
+    <link rel="stylesheet" href="tamagotchi.css">
+
+
+</head>
+<body>
+    <div id="startScreen" class="start-screen">
+        <div class="start-container">
+            <button id="startBtn" class="start-button">Start Game</button>
+        </div>
+    </div>
+
+    <div id="gameScreen" class="game-screen" style="display: none;">
+        <div class="Stats">
+            <div id="hunger">59 🍗</div>
+            <div id="sleep">100 😴</div>
+            <div id="joy">😆 5</div>
+        </div>
+  
+    <div class="Character">
+        <img src="bear-cute-character-png.webp" alt="Tamagotchi character">
+    </div>
+
+    <div class="status">
+        <p>Status</p>
+    <div class="food">
+        <p id="food">Ik heb honger!</p>
+    </div>
+
+    <div class="sleep-text">
+        <p id="sleep-text">Ik ben moe!</p>
+    </div>
+
+    <div class="bored">
+        <p id="bored">Ik verveel me!</p>
+        
+    </div>
+
+    <div class="Buttons">
+    <button id="feed" onclick="increase_hunger_value()">Voedsel 🍗</button>
+    <button id="sleep-btn" onclick="toggleDarkMode()">slaap 😴</button>
+    <button id="play" onclick="increase_joy_value()">Spelen 😆</button>
+</div>
+    </div>
+
+    
+
+
+
+
+    <script>
+    let hunger = 100 ;
+    let sleep = 100 ;
+    let joy = 100 ; 
+
+    
+    document.getElementById("startBtn").addEventListener("click", function() {
+        document.getElementById("startScreen").style.display = "none";
+        document.getElementById("gameScreen").style.display = "block";
+        start_game();
+    });
+
+   
+    function start_game(){
+        document.getElementById("hunger").innerHTML = hunger + "🍗";
+        document.getElementById("sleep").innerHTML = sleep + " 😴";
+        document.getElementById("joy").innerHTML = joy +"😆";
+    }
+
+    function decrease_hunger() {
+        if(hunger > 0) {
+            hunger--;
+        }
+        document.getElementById("hunger").innerHTML = hunger + " 🍗";
+        console.log(hunger);
+        show_food_text();
+        
+        if(hunger <= 0) {
+            document.getElementById("hunger").innerHTML = "💀";
+           
+        }
+    }
+
+    setInterval(decrease_hunger, 700);
+
+    
+    function decrease_sleep() {
+    if (!document.body.classList.contains('dark-mode')) {
+        if (sleep > 0) {
+            sleep--;
+        }
+    }
+
+    document.getElementById("sleep").innerHTML = sleep + " 😴";
+    show_sleepy_text();
+
+    if (sleep <= 0) {
+        document.getElementById("sleep").innerHTML = "💀";
+    }
+}
+
+setInterval(decrease_sleep, 600);
+setInterval(sleep_when_dark, 500);
+
+
+function decrease_joy() {
+        if(joy > 0) {
+            joy--;
+        }
+        document.getElementById("joy").innerHTML = joy +"😆";
+        console.log(joy);
+
+        if(joy <= 0) {
+            document.getElementById("joy").innerHTML = "💀";
+           
+        }
+        show_bored_text();
+    }
+setInterval(decrease_joy, 800);
+
+function increase_sleep_value() {
+    if(sleep < 100) {
+        sleep += 10;
+    }
+    if(sleep > 100) {
+        sleep = 100;
+    }
+
+    document.getElementById("sleep").innerHTML = sleep + " 😴";
+    console.log(sleep);
+    
+}
+
+function increase_hunger_value() {
+    if(hunger < 100) {
+        hunger += 10;
+    }
+    if(hunger > 100) {
+        hunger = 100;
+    }
+
+    document.getElementById("hunger").innerHTML = hunger + " 🍗";
+    console.log(hunger);
+    
+}
+
+function increase_joy_value() {
+    if(joy < 100) {
+        joy += 10;
+    }
+    if(joy > 100) {
+        joy = 100;
+    }
+
+    document.getElementById("joy").innerHTML = joy +"😆";
+    console.log(joy);
+    
+}
+
+function show_food_text() {
+    if(hunger <= 30) {
+        document.getElementById(meldingen[0]).innerHTML = berichtTeksten[0];
+    } else {
+        document.getElementById(meldingen[0]).innerHTML = "";
+    }
+}
+
+function show_bored_text() {
+    if(joy <= 30) {
+        document.getElementById(meldingen[2]).innerHTML = berichtTeksten[2];
+    } else {
+        document.getElementById(meldingen[2]).innerHTML = "";
+    }
+}
+
+function show_sleepy_text() {
+    if(sleep <= 30) {
+        document.getElementById(meldingen[1]).innerHTML = berichtTeksten[1];
+    } else {
+        document.getElementById(meldingen[1]).innerHTML = "";
+    }
+}
+
+start_game();
+
+function toggleDarkMode() {
+    document.body.classList.toggle('dark-mode');
+    const feedBtn = document.getElementById('feed');
+    const playBtn = document.getElementById('play');
+    
+    if (feedBtn.style.display === 'none') {
+        feedBtn.style.display = 'inline-block';
+        playBtn.style.display = 'inline-block';
+    } else {
+        feedBtn.style.display = 'none';
+        playBtn.style.display = 'none';
+    }
+}
+
+function sleep_when_dark() {
+    if (document.body.classList.contains('dark-mode')) {
+        if (sleep < 100) {
+            sleep++;
+            document.getElementById("sleep").innerHTML = sleep + " 😴";
+        }
+    }
+}
+
+
+start_game()
+
+let meldingen = ["food", "sleep-text", "bored"];
+let berichtTeksten = ["Ik heb honger!", "Ik ben moe!", "Ik verveel me!"];
+
+function clearMessages() {
+    for(let i = 0; i < meldingen.length; i++) {
+        document.getElementById(meldingen[i]).innerHTML = "";
+    }
+}
+
+</script>
+
+
+</body>
+</html>
+
